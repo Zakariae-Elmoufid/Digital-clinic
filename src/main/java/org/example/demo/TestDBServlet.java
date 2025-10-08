@@ -17,7 +17,7 @@ public class TestDBServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("clinicPu");
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("clinicPu");
             EntityManager em = emf.createEntityManager();
 
         response.setContentType("text/html");
