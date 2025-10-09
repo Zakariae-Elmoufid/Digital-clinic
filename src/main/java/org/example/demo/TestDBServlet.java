@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.demo.util.JPAsingleton;
 
 import java.io.IOException;
 @WebServlet(name = "testDBServlet", value = "/test")
@@ -17,8 +18,7 @@ public class TestDBServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("clinicPu");
-            EntityManager em = emf.createEntityManager();
+        EntityManager em =  JPAsingleton.getEntityManager();
 
         response.setContentType("text/html");
         try {
@@ -29,7 +29,6 @@ public class TestDBServlet extends HttpServlet {
             response.getWriter().println("<h1>Error: " + e.getMessage() + "</h1>");
         } finally {
             em.close();
-            emf.close();
         }
     }
 }

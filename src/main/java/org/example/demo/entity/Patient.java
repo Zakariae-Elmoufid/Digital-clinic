@@ -34,12 +34,16 @@ public class Patient {
     @Column(name = "insurance_number")
     private String insuranceNumber;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "patient")
-    private java.util.List<Appointement> appointements;
+    private java.util.List<Appointment> appointements;
+
+
+    public Patient() {}
+
 
     public Long getId() {
         return id;
@@ -97,11 +101,11 @@ public class Patient {
         this.user = user;
     }
 
-    public List<Appointement> getAppointements() {
+    public List<Appointment> getAppointements() {
         return appointements;
     }
 
-    public void setAppointements(List<Appointement> appointements) {
+    public void setAppointements(List<Appointment> appointements) {
         this.appointements = appointements;
     }
 }
