@@ -52,9 +52,7 @@ public class RegisterPatientServlet extends HttpServlet {
             req.setAttribute("errors", errors);
             req.getRequestDispatcher("/WEB-INF/views/patient/register.jsp").forward(req, resp);
         } else {
-            req.setAttribute("success", "Registration successful!");
-            req.getRequestDispatcher("/WEB-INF/views/patient/register.jsp").forward(req, resp);
-            //resp.sendRedirect("login.jsp");
+            req.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(req, resp);
         }
     }
 

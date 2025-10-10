@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.example.demo.dto.LoginDTO;
 import org.example.demo.entity.Patient;
+import org.example.demo.entity.User;
+import org.example.demo.mapper.LoginMapper;
 import org.example.demo.service.AuthService;
 import org.example.demo.util.Validator;
 
@@ -33,7 +35,7 @@ public class LoginServlet  extends HttpServlet {
         String password = request.getParameter("password");
         LoginDTO loginDTO = new LoginDTO(email, password);
         Map<String, String> errors = new HashMap<>();
-        Patient patient = authService.login(loginDTO , errors );
+        LoginDTO user = authService.login(loginDTO , errors );
         if (!errors.isEmpty()) {
             request.setAttribute("errors", errors);
             request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
@@ -41,8 +43,8 @@ public class LoginServlet  extends HttpServlet {
         }
 
         HttpSession session = request.getSession();
-        session.setAttribute("user", patient.getUser());
-        session.setAttribute("role", patient.getUser().getRole());
+        session.setAttribute("user", user);
+        session.setAttribute("role", user.getRole().name());
 
         String role =  (String) session.getAttribute("role");
 
@@ -56,8 +58,10 @@ public class LoginServlet  extends HttpServlet {
             case "PATIENT":
                 response.sendRedirect(request.getContextPath() + "/WEB-INF/views/patient/dashboard");
                 break;
+            case "STAFF":
+                response.sendRedirect(request.getContextPath() + "/WEB-INF/views/staff/dashboard");
             default:
-                response.sendRedirect(request.getContextPath() + "/");
+                response.sendRedirect(request.getContextPath() + "WEB-INF/views");
         }
 
 

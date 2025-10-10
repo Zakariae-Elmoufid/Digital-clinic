@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static org.example.demo.mapper.LoginMapper.toDTO;
 import static org.example.demo.util.PasswordUtils.checkPassword;
 
 public class AuthService {
@@ -49,7 +50,7 @@ public class AuthService {
         return validator.getErrors();
     }
 
-    public Patient  login(LoginDTO dto , Map<String, String> errors){
+    public LoginDTO  login(LoginDTO dto , Map<String, String> errors){
 
         Validator validator = new Validator();
         validator.email("email",dto.getEmail(), "Email is invalid");
@@ -61,18 +62,18 @@ public class AuthService {
         }
 
 
-        Patient newPatient = LoginMapper.toEntity(dto);
-        Patient patient = userRepository.findUserByEmail(newPatient.getUser().getEmail());
-        if (patient == null) {
+        User newuser = LoginMapper.toEntity(dto);
+        User user = userRepository.findUserByEmail(newuser.getEmail());
+        if (user == null) {
             errors.put("email", "No account found with this email");
             return null;
         }
-        boolean passwordMatch = checkPassword(dto.getPassword(), patient.getUser().getPassword());
+        boolean passwordMatch = checkPassword(dto.getPassword(), user.getPassword());
         if (!passwordMatch) {
             errors.put("password", "Incorrect password");
             return null;
         }
 
-        return patient;
+        return LoginMapper.toDTO(user);
     }
 }

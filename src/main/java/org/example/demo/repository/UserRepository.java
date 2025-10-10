@@ -26,12 +26,11 @@ public class UserRepository implements UserInterface {
       }
    }
 
-   public Patient findUserByEmail(String email){
+   public User findUserByEmail(String email){
       EntityManager em  = JPAsingleton.getEntityManager();
       try{
-         return em.createQuery( "SELECT p FROM Patient p " +
-                         "JOIN p.user u " +
-                         "WHERE u.email = :email", Patient.class)
+         return em.createQuery( "SELECT u FROM User u " +
+                         "WHERE u.email = :email", User.class)
                  .setParameter("email", email)
                  .getSingleResult();
       }catch(NoResultException e){

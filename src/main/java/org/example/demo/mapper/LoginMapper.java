@@ -4,16 +4,21 @@ import org.example.demo.dto.LoginDTO;
 import org.example.demo.entity.Patient;
 import org.example.demo.entity.User;
 
+import java.net.SocketOption;
+
 public class LoginMapper {
 
-    public static Patient toEntity(LoginDTO dto) {
+    public static User toEntity(LoginDTO dto) {
         User user = new User();
-        Patient patient = new Patient();
         user.setEmail(dto.getEmail());
         user.setPassword(dto.getPassword());
-        patient.setUser(user);
-        return patient;
+        return user;
     }
+
+    public static LoginDTO toDTO(User user) {
+        return new LoginDTO(user.getId(), user.getEmail(), user.getFullName(),user.getRole());
+    }
+
 
 
 }
