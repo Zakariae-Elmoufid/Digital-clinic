@@ -108,4 +108,7 @@ public class Patient {
     public void setAppointements(List<Appointment> appointements) {
         this.appointements = appointements;
     }
+
+
+
 }

@@ -27,8 +27,7 @@
     </c:if>
 
     <div class="bg-white rounded-lg shadow-lg p-8">
-        <form action="${pageContext.request.contextPath}/patient" method="post">
-            <input type="hidden" name="action" value="register">
+        <form action="${pageContext.request.contextPath}/register" method="post">
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 

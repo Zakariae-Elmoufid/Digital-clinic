@@ -7,8 +7,8 @@
 <body>
 <h1><%= "Hello World!" %></h1>
 <br/>
-<a href="hello">Hello Servlet</a>
 
- <a href="${pageContext.request.contextPath}/patient" >regster</a>
+ <a href="${pageContext.request.contextPath}/register" >Regster</a><br>
+ <a href="${pageContext.request.contextPath}/login">Log In</a>
 </body>
 </html>

@@ -1,16 +1,23 @@
 package org.example.demo.service;
 
+import org.example.demo.dto.LoginDTO;
 import org.example.demo.dto.RegisterPatientDTO;
 import org.example.demo.entity.Patient;
 import org.example.demo.entity.User;
+import org.example.demo.mapper.LoginMapper;
 import org.example.demo.mapper.RegisterPatientMapper;
 import org.example.demo.repository.UserRepository;
 import org.example.demo.util.Validator;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+
+import static org.example.demo.util.PasswordUtils.checkPassword;
 
 public class AuthService {
 
@@ -40,6 +47,32 @@ public class AuthService {
         Patient newPatient = RegisterPatientMapper.toEntity(dto);
         userRepository.save(newPatient);
         return validator.getErrors();
+    }
 
+    public Patient  login(LoginDTO dto , Map<String, String> errors){
+
+        Validator validator = new Validator();
+        validator.email("email",dto.getEmail(), "Email is invalid");
+        validator.minLength("password", dto.getPassword(), 6, "Password must be at least 6 characters");
+
+        if (validator.hasErrors()) {
+            errors.putAll(validator.getErrors());
+           return null;
+        }
+
+
+        Patient newPatient = LoginMapper.toEntity(dto);
+        Patient patient = userRepository.findUserByEmail(newPatient.getUser().getEmail());
+        if (patient == null) {
+            errors.put("email", "No account found with this email");
+            return null;
+        }
+        boolean passwordMatch = checkPassword(dto.getPassword(), patient.getUser().getPassword());
+        if (!passwordMatch) {
+            errors.put("password", "Incorrect password");
+            return null;
+        }
+
+        return patient;
     }
 }
