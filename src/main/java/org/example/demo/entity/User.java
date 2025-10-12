@@ -2,6 +2,8 @@ package org.example.demo.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.example.demo.enums.RoleEnum;
 
 import java.time.LocalDateTime;
@@ -35,6 +37,10 @@ public class User {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt = LocalDateTime.now();
+
+    public User(){
+
+    }
 
     public Long getId() {
         return id;
@@ -71,6 +77,7 @@ public class User {
     public RoleEnum getRole() {
         return role;
     }
+
 
     public void setRole(RoleEnum role) {
         this.role = role;

@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 public class JPAsingleton {
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("myPU");
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("clinicPu");
 
     public static EntityManager getEntityManager() {
         return emf.createEntityManager();

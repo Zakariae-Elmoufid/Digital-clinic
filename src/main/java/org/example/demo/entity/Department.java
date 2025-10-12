@@ -6,8 +6,14 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-Entity
+@Entity
 @Table(name = "departments")
+@NamedQueries({
+        @NamedQuery(
+                name = "Department.findAll",
+                query = "SELECT d FROM Department d"
+        )
+})
 public class Department {
 
     @Id
