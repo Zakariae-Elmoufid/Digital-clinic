@@ -40,7 +40,7 @@
 </head>
 <body class="bg-gray-50 dark:bg-gray-900">
 <!-- Sidebar -->
-<c:set var="currentPage" value="specialtie" scope="request" />
+<c:set var="currentPage" value="specialties" scope="request" />
 <%@ include file="./../component/sidebar.jsp" %>
 
 <!-- Main Content -->

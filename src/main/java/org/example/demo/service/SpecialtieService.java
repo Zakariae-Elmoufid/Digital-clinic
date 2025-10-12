@@ -13,11 +13,15 @@ import java.util.List;
 
 public class SpecialtieService {
     private final   SpecialtieRepository specialtieRepository;
-    private final DepartmentRepository departmentRepository;
+    private  DepartmentRepository departmentRepository;
 
     public SpecialtieService (SpecialtieRepository specialtieRepository , DepartmentRepository departmentRepository) {
         this.specialtieRepository = specialtieRepository;
         this.departmentRepository =  departmentRepository;
+    }
+
+    public SpecialtieService (SpecialtieRepository specialtieRepository) {
+        this.specialtieRepository = specialtieRepository;
     }
 
     public void  saveSpecialtie(SpecialtieDTO dto){
@@ -31,7 +35,6 @@ public class SpecialtieService {
 
     public List<SpecialtieDTO> getAllSpecialtie(){
           List<Specialite> specialites  = specialtieRepository.findAll();
-        System.out.println("Found specialties: " + specialites);
         return SpecialtieMapper.toDTOList(specialites);
     }
 
