@@ -296,54 +296,54 @@
 
         <!-- Departments Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <c:forEach var="dep" items="${departments}">
-                <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 hover:shadow-lg transition duration-200">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">${dep.name}</h3>
-                        <c:choose>
-                            <c:when test="${dep.active}">
-                                <span class="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full text-xs font-semibold">Active</span>
-                            </c:when>
-                            <c:otherwise>
-                                <span class="px-3 py-1 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 rounded-full text-xs font-semibold">Inactive</span>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">${dep.description}</p>
-                    <div class="flex space-x-2 mt-4">
-                        <button onclick="editDept(${dep.id}, '${fn:escapeXml(dep.name)}', '${fn:escapeXml(dep.description)}')"
-                                class="flex-1 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-100 dark:hover:bg-blue-900/40 transition duration-200">
-                            Edit
-                        </button>
+<%--            <c:forEach var="dep" items="${departments}">--%>
+<%--                <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 hover:shadow-lg transition duration-200">--%>
+<%--                    <div class="flex items-center justify-between mb-4">--%>
+<%--                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">${dep.name}</h3>--%>
+<%--                        <c:choose>--%>
+<%--                            <c:when test="${dep.active}">--%>
+<%--                                <span class="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full text-xs font-semibold">Active</span>--%>
+<%--                            </c:when>--%>
+<%--                            <c:otherwise>--%>
+<%--                                <span class="px-3 py-1 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 rounded-full text-xs font-semibold">Inactive</span>--%>
+<%--                            </c:otherwise>--%>
+<%--                        </c:choose>--%>
+<%--                    </div>--%>
+<%--                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">${dep.description}</p>--%>
+<%--                    <div class="flex space-x-2 mt-4">--%>
+<%--                        <button onclick="editDept(${dep.id}, '${fn:escapeXml(dep.name)}', '${fn:escapeXml(dep.description)}')"--%>
+<%--                                class="flex-1 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-100 dark:hover:bg-blue-900/40 transition duration-200">--%>
+<%--                            Edit--%>
+<%--                        </button>--%>
 
 
-                            <c:choose>
-                                <c:when test="${dep.active}">
-                                    <form action="${pageContext.request.contextPath}/admin/departments" method="post">
-                                        <input type="hidden" name="action" value="toggleActive"/>
-                                        <input type="hidden" name="id" value="${dep.id}" />
-                                        <input type="hidden" name="isActive" value="false" />
-                                        <button type="submit" class="text-500-red bg-50-red">Deactivate</button>
-                                    </form>
-                                </c:when>
-                                <c:otherwise>
-                                    <form action="${pageContext.request.contextPath}/admin/departments" method="post">
-                                        <input type="hidden" name="action" value="toggleActive"/>
-                                        <input type="hidden" name="id" value="${dep.id}" />
-                                        <input type="hidden" name="isActive" value="true" />
-                                        <button type="submit" class="text-500-green bg-50-green">Activate</button>
-                                    </form>
-                                </c:otherwise>
+<%--                            <c:choose>--%>
+<%--                                <c:when test="${dep.active}">--%>
+<%--                                    <form action="${pageContext.request.contextPath}/admin/departments" method="post">--%>
+<%--                                        <input type="hidden" name="action" value="toggleActive"/>--%>
+<%--                                        <input type="hidden" name="id" value="${dep.id}" />--%>
+<%--                                        <input type="hidden" name="isActive" value="false" />--%>
+<%--                                        <button type="submit" class="text-500-red bg-50-red">Deactivate</button>--%>
+<%--                                    </form>--%>
+<%--                                </c:when>--%>
+<%--                                <c:otherwise>--%>
+<%--                                    <form action="${pageContext.request.contextPath}/admin/departments" method="post">--%>
+<%--                                        <input type="hidden" name="action" value="toggleActive"/>--%>
+<%--                                        <input type="hidden" name="id" value="${dep.id}" />--%>
+<%--                                        <input type="hidden" name="isActive" value="true" />--%>
+<%--                                        <button type="submit" class="text-500-green bg-50-green">Activate</button>--%>
+<%--                                    </form>--%>
+<%--                                </c:otherwise>--%>
 
-                            </c:choose>
+<%--                            </c:choose>--%>
 
-                        <button onclick="deleteDept(${dep.id})"
-                                class="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-xl text-sm font-medium hover:bg-red-100 dark:hover:bg-red-900/40 transition duration-200">
-                            Delete
-                        </button>
-                    </div>
-                </div>
-            </c:forEach>
+<%--                        <button onclick="deleteDept(${dep.id})"--%>
+<%--                                class="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-xl text-sm font-medium hover:bg-red-100 dark:hover:bg-red-900/40 transition duration-200">--%>
+<%--                            Delete--%>
+<%--                        </button>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </c:forEach>--%>
 
             <!-- Add New Card -->
             <div onclick="openModal('add-modal')"

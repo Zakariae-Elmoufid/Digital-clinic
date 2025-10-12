@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Validator;
 import org.example.demo.dto.DepartmentDTO;
 import org.example.demo.entity.Department;
+import org.example.demo.repository.DepartmentRepository;
 import org.example.demo.service.DepartmentService;
 import org.example.demo.util.ValidatorUtil;
 import jakarta.validation.ConstraintViolation;
@@ -23,7 +24,14 @@ import java.io.IOException;
 public class DepartmentServlet extends  HttpServlet {
 
 
-    private final DepartmentService departmentService =  new DepartmentService();
+    private  DepartmentService departmentService;
+
+
+
+    public  void init() throws ServletException {
+         DepartmentRepository departmentRepository = new DepartmentRepository();
+         this.departmentService =   new DepartmentService(departmentRepository);
+     }
 
      public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
          List<DepartmentDTO> departments = departmentService.findAllDepartment();
