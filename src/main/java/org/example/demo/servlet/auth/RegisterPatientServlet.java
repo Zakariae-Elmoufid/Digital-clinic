@@ -1,4 +1,4 @@
-package org.example.demo.servlet;
+package org.example.demo.servlet.auth;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -27,7 +27,7 @@ public class RegisterPatientServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/patient/register.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -50,7 +50,7 @@ public class RegisterPatientServlet extends HttpServlet {
 
         if (!errors.isEmpty()) {
             req.setAttribute("errors", errors);
-            req.getRequestDispatcher("/WEB-INF/views/patient/register.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(req, resp);
         } else {
             req.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(req, resp);
         }

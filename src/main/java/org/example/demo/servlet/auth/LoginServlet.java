@@ -1,4 +1,4 @@
-package org.example.demo.servlet;
+package org.example.demo.servlet.auth;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -8,11 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.example.demo.dto.LoginDTO;
-import org.example.demo.entity.Patient;
-import org.example.demo.entity.User;
-import org.example.demo.mapper.LoginMapper;
 import org.example.demo.service.AuthService;
-import org.example.demo.util.Validator;
 
 import java.io.IOException;
 import java.util.HashMap;

@@ -8,6 +8,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "departments")
+@NamedQueries({
+        @NamedQuery(
+                name = "Department.findAll",
+                query = "SELECT d FROM Department d"
+        )
+})
 public class Department {
 
     @Id
