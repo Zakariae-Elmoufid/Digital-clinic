@@ -28,13 +28,15 @@
             document.getElementById(id).classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
-        function editDoctor(id, name, email, phone, specialty, department) {
+        function editDoctor(id, name, email,matriculate,active,spcialtie,spcialtieId) {
             document.getElementById('edit-id').value = id;
             document.getElementById('edit-name').value = name;
             document.getElementById('edit-email').value = email;
-            document.getElementById('edit-phone').value = phone || '';
-            document.getElementById('edit-specialty').value = specialty || '';
-            document.getElementById('edit-department').value = department || '';
+            document.getElementById('edit-matriculate').value = matriculate;
+            document.getElementById('edit-spcialtie').innerHTML = spcialtie;
+            document.getElementById('edit-spcialtie').value = spcialtieId
+
+            document.getElementById("edit-active").checked = (active === "true" || active === true);
             openModal('edit-modal');
         }
         function deleteDoctor(id, name) {
@@ -148,6 +150,7 @@
             </div>
         </div>
 
+
         <!-- Doctors Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <c:forEach var="doctor" items="${doctors}">
@@ -174,8 +177,8 @@
                     <h3 class="doctor-name text-lg font-bold text-gray-900 dark:text-white mb-2">${doctor.name}</h3>
                     <p class="doctor-specialty text-sm text-blue-600 dark:text-blue-400 font-medium mb-2">
                         <c:choose>
-                            <c:when test="${not empty doctor.specialty}">
-                                ${doctor.specialty}
+                            <c:when test="${not empty doctor.specialite}">
+                                ${doctor.specialite}
                             </c:when>
                             <c:otherwise>General Practitioner</c:otherwise>
                         </c:choose>
@@ -187,19 +190,13 @@
                             </c:when>
                             <c:otherwise>No Department</c:otherwise>
                         </c:choose>
+                  </p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2" >
+                        matracule : ${doctor.matriculate}
                     </p>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">📧 ${doctor.email}</p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                        📞 <c:choose>
-                        <c:when test="${not empty doctor.phone}">
-                            ${doctor.phone}
-                        </c:when>
-                        <c:otherwise>No phone</c:otherwise>
-                    </c:choose>
-                    </p>
-
                     <div class="text-xs text-gray-500 dark:text-gray-400 mb-4">
-                        Joined: <fmt:formatDate value="${doctor.joinedAt}" pattern="MMM dd, yyyy"/>
+                         ${doctor.createdAt}
                     </div>
 
                     <div class="flex space-x-2">
@@ -207,7 +204,7 @@
                                 class="flex-1 px-3 py-2 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-xl text-sm hover:bg-green-100 transition">
                             View
                         </button>
-                        <button onclick="editDoctor(${doctor.id}, '${fn:escapeXml(doctor.name)}', '${fn:escapeXml(doctor.email)}', '${fn:escapeXml(doctor.phone)}', '${fn:escapeXml(doctor.specialty)}', '${fn:escapeXml(doctor.department)}')"
+                        <button onclick="editDoctor(${doctor.id}, '${fn:escapeXml(doctor.name)}', '${fn:escapeXml(doctor.email)}' ,'${fn:escapeXml(doctor.matriculate)}', '${fn:escapeXml(doctor.active)}', '${fn:escapeXml(doctor.specialite)}','${fn:escapeXml(doctor.sepcialtieId)}')"
                                 class="px-3 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-xl text-sm hover:bg-blue-100 transition">
                             Edit
                         </button>
@@ -287,6 +284,7 @@
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Specialty</label>
                     <select name="specialtyId" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
                         <option value="">Select Specialty</option>
+
                         <c:forEach var="specialty" items="${specialties}">
                             <option value="${specialty.id}">${specialty.name}</option>
                         </c:forEach>
@@ -332,20 +330,26 @@
                            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Phone</label>
-                    <input type="tel" id="edit-phone" name="phone"
-                           class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    <label  class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Matriculate</label>
+                    <input id="edit-matriculate" type="text" name="matriculate" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+
+                           placeholder="Ex : DOC1234" >
                 </div>
+
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Specialty</label>
-                    <input type="text" id="edit-specialty" name="specialty"
-                           class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    <select name="specialtyId" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                        <option selected  id="edit-spcialtie"></option>
+                        <c:forEach var="specialty" items="${specialties}">
+                            <option value="${specialty.id}">${specialty.name}</option>
+                        </c:forEach>
+                    </select>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Department</label>
-                    <input type="text" id="edit-department" name="department"
-                           class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                <div class="flex items-center">
+                    <input type="checkbox" checked  name="active" id="edit-active"  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                    <label for="edit-active" class="ml-2 text-sm text-gray-700 dark:text-gray-300">Active</label>
                 </div>
+
                 <div class="flex space-x-4">
                     <button type="button" onclick="closeModal('edit-modal')" class="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl">Cancel</button>
                     <button type="submit" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700">Update Doctor</button>

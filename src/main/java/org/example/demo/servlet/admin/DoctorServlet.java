@@ -37,7 +37,12 @@ public class DoctorServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<SpecialtieDTO> specialties = specialtieService.getAllSpecialtie();
+        List<DoctorDTO> doctors = doctorService.getAllDoctors();
+
+
         req.setAttribute("specialties", specialties);
+        req.setAttribute("doctors", doctors);
+
         RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/admin/doctors.jsp");
         rd.forward(req, resp);
     }
@@ -47,6 +52,10 @@ public class DoctorServlet extends HttpServlet {
 
         if(action.equals("add")){
             addDoctor(req,resp);
+        }else if (action.equals("update")){
+            updateDoctor(req,resp);
+        }else if(action.equals("delete")){
+            deleteDoctor(req,resp);
         }
     }
 
@@ -81,5 +90,53 @@ public class DoctorServlet extends HttpServlet {
             doGet(req, resp);
         }
     }
+
+    public void updateDoctor(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Long id = Long.parseLong(req.getParameter("id"));
+        String name = req.getParameter("name");
+        String email = req.getParameter("email");
+        String matriculate = req.getParameter("matriculate");
+        boolean active = req.getParameter("active") != null;
+        Long specialtieId = Long.parseLong(req.getParameter("specialtyId"));
+
+
+
+        DoctorDTO doctorDTO = new DoctorDTO(id,name,email,specialtieId,matriculate,active);
+        Validator validator = ValidatorUtil.getValidator();
+        Set<ConstraintViolation<DoctorDTO>> violations =  validator.validate(doctorDTO);
+
+        if (!violations.isEmpty()) {
+            req.setAttribute("oldName", name);
+            req.setAttribute("oldEmail", email);
+            req.setAttribute("oldMatriculate", matriculate);
+            req.setAttribute("errors", violations);
+            doGet(req, resp);
+            return;
+        }
+        try{
+            doctorService.updateDoctor(doctorDTO);
+            req.setAttribute("success", "Doctor has been update successfully");
+            doGet(req, resp);
+        }catch (Exception e){
+            e.printStackTrace();
+            doGet(req, resp);
+        }
+
+    }
+
+    public void  deleteDoctor(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String idStr = req.getParameter("id");
+        Long id = Long.parseLong(idStr);
+        try {
+            doctorService.deleteDoctor(id);
+            req.setAttribute("success","doctor  deleted successfully!");
+            doGet(req, resp);
+        }catch (Exception e) {
+            req.setAttribute("error", "Error deleting doctor: " + e.getMessage());
+            doGet(req, resp);
+        }
+    }
+
+
 
 }
