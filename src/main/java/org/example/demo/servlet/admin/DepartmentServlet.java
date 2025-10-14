@@ -35,6 +35,7 @@ public class DepartmentServlet extends  HttpServlet {
 
      public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
          List<DepartmentDTO> departments = departmentService.findAllDepartment();
+
          request.setAttribute("departments", departments);
          RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/admin/department.jsp");
          dispatcher.forward(request, response);

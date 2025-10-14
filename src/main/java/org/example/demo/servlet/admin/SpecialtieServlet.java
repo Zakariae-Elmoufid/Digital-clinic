@@ -126,8 +126,7 @@ public class SpecialtieServlet extends HttpServlet {
     }
 
     public void deleteSpecialtie(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String idStr = req.getParameter("id");
-        Long id = Long.parseLong(idStr);
+        Long id = Long.parseLong(req.getParameter("id"));
         String name=req.getParameter("name");
 
         try {
