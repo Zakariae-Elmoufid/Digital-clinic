@@ -1,5 +1,6 @@
 package org.example.demo.entity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 
 import java.util.List;
 
@@ -11,14 +12,16 @@ public class Doctor {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
+    @Pattern(regexp = "DOC[0-9]{4}", message = "the matricule must follow this form DOC1234")
     @Column(unique = true, nullable = false)
     private String matricule;
 
-    @OneToOne
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="specialite_id")
     private Specialite specialite;
 
@@ -74,5 +77,17 @@ public class Doctor {
 
     public void setAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                "id=" + id +
+                ", matricule='" + matricule + '\'' +
+                ", user=" + user +
+                ", specialite=" + specialite +
+                ", availabilities=" + availabilities +
+                ", appointments=" + appointments +
+                '}';
     }
 }

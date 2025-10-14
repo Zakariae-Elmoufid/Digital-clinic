@@ -20,7 +20,7 @@ public class Specialite {
     @Column(name = "is_active")
     private Boolean isActive = true;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="department_id", nullable = false)
     private Department department;
 
@@ -59,13 +59,13 @@ public class Specialite {
         isActive = active;
     }
 
-    public List<Doctor> getDoctors() {
-        return doctors;
-    }
-
-    public void setDoctors(List<Doctor> doctors) {
-        this.doctors = doctors;
-    }
+//    public List<Doctor> getDoctors() {
+//        return doctors;
+//    }
+//
+//    public void setDoctors(List<Doctor> doctors) {
+//        this.doctors = doctors;
+//    }
 
     public Department getDepartment() {
         return department;
@@ -73,5 +73,16 @@ public class Specialite {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    @Override
+    public String toString() {
+        return "Specialite{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", isActive=" + isActive +
+                ", department=" + department +
+                '}';
     }
 }

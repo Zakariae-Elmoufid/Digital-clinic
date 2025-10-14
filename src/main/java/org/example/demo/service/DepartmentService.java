@@ -9,7 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DepartmentService {
-    private DepartmentRepository departmentRepository = new DepartmentRepository();
+    private final DepartmentRepository departmentRepository ;
+
+    public DepartmentService(DepartmentRepository departmentRepository) {
+        this.departmentRepository = departmentRepository;
+    }
 
     public void createDepartment(DepartmentDTO departmentDTO) {
         Department department = DepartmentMapper.toEntity(departmentDTO);

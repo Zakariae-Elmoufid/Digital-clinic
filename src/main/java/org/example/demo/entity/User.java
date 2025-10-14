@@ -2,6 +2,7 @@ package org.example.demo.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.example.demo.enums.RoleEnum;
@@ -16,12 +17,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "L'adresse e-mail est obligatoire")
+    @Email(message = "L'adresse e-mail doit être valide")
     @Column(unique = true, nullable = false)
     private String email;
 
     @Column(nullable = false)
     private String password;
 
+    @NotBlank(message = "Le nom complet est obligatoire")
+    @Size(min = 3, max = 50, message = "Le nom complet doit contenir entre 3 et 50 caractères")
     @Column(name = "full_name", nullable = false)
     private String fullName;
 

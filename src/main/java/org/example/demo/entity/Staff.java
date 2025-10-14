@@ -1,6 +1,7 @@
 package org.example.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
@@ -11,10 +12,10 @@ public class Staff {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(min = 4, max = 50 , message = "the position must contain 4 char miniment")
     private String position;
 
-    @Column(name = "created_at")
-    private java.time.LocalDateTime createdAt = java.time.LocalDateTime.now();
+
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -37,13 +38,7 @@ public class Staff {
         this.position = position;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 
     public User getUser() {
         return user;
