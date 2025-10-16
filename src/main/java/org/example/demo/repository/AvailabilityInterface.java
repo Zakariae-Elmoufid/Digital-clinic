@@ -9,4 +9,8 @@ import java.util.List;
 public interface AvailabilityInterface {
     public void save(Availability availability  );
     public List<Availability> findAllByDoctor(long id);
+    public Availability findById(long id);
+    public void update(Availability availability);
+    public void delete(long id);
+
 }

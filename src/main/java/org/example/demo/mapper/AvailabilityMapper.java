@@ -22,6 +22,19 @@ public class AvailabilityMapper {
         return availability;
     }
 
+    public static Availability toEntity(AvailabilityDTO dto){
+        Availability availability = new Availability();
+        availability.setId(dto.getId());
+        availability.setSlotDuration(dto.getSlotDuration());
+        availability.setDayOfWeek(dto.getDayOfWeek());
+        availability.setStartTime(dto.getStartTime());
+        availability.setEndTime(dto.getEndTime());
+        availability.setStartDate(dto.getStartDate());
+        availability.setEndDate(dto.getEndDate());
+        availability.setAvailable(dto.isAvailable());
+        return availability;
+    }
+
     public static AvailabilityDTO toDTO(Availability availability){
         return  new AvailabilityDTO(availability.getId(),availability.getDayOfWeek(),availability.getStartTime(),availability.getEndTime(),availability.getStartDate(),availability.getEndDate(),availability.getSlotDuration() ,availability.getAvailable());
     }

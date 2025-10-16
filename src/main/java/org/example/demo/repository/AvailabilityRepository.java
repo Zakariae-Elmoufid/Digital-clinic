@@ -61,4 +61,45 @@ public class AvailabilityRepository implements AvailabilityInterface {
             em.close();
         }
     }
+
+    public Availability findById(long id){
+        EntityManager em = JPAsingleton.getEntityManager();
+        try{
+            return em.find(Availability.class, id);
+        }finally{
+            em.close();
+        }
+    }
+
+    @Override
+    public void update(Availability availability) {
+        EntityManager em = JPAsingleton.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            em.merge(availability);
+            tx.commit();
+        }catch(Exception e){
+            if(tx.isActive()) tx.rollback();
+            e.printStackTrace();
+        }finally{
+            em.close();
+        }
+    }
+
+    public void delete( long id) {
+        EntityManager em = JPAsingleton.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            Availability availability = em.find(Availability.class, id);
+            em.remove(availability);
+            tx.commit();
+        }catch(Exception e){
+            if(tx.isActive()) tx.rollback();
+            e.printStackTrace();
+        }finally{
+            em.close();
+        }
+    }
 }

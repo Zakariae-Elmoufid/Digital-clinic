@@ -29,6 +29,14 @@ public class AvailabilityDTO {
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
     DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
     public LocalDate getStartDate() {
         return startDate;
     }
@@ -59,6 +67,16 @@ public class AvailabilityDTO {
         this.UserId = UserId;
     }
 
+    public AvailabilityDTO(int slotDuration , DayOfWeekEnum dayOfWeek, LocalTime startTime, LocalTime endTime, LocalDate startDate , LocalDate endDate ,  boolean isAvailable) {
+        this.slotDuration = slotDuration ;
+        this.dayOfWeek = dayOfWeek;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.isAvailable = isAvailable;
+    }
+
 
 
     public AvailabilityDTO(
@@ -71,8 +89,11 @@ public class AvailabilityDTO {
         this.endDateFormatted  = (endDate != null ) ? endDate.format(dateFormatter)  : null;
         this.startTimeFormatted  = startTime.format(timeFormatter);
         this.endTimeFormatted  = endTime.format(timeFormatter) ;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.isAvailable = isAvailable;
-
     }
 
     public String getStartDateFormatted() {
@@ -179,6 +200,7 @@ public class AvailabilityDTO {
                 ", endDate=" + endDate +
                 ", slotDuration=" + slotDuration +
                 ", UserId=" + UserId +
+                ", isAvailable=" + isAvailable +
                 '}';
     }
 }

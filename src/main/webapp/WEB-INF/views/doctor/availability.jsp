@@ -32,14 +32,27 @@
             document.getElementById(id).classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
-        function editAvailability(id, day, startTime, endTime, isAvailable) {
+        function editSlot(id, day, duration, startTime, endTime, startDate , endDate ,  isAvailable) {
             document.getElementById('edit-id').value = id;
             document.getElementById('edit-day').value = day;
+            document.getElementById('edit-day').innerHTML = day;
+            document.getElementById('edit-duration').value = duration
             document.getElementById('edit-start-time').value = startTime;
             document.getElementById('edit-end-time').value = endTime;
-            document.getElementById('edit-available').checked = isAvailable;
+
+            document.getElementById('edit-start-date').value = startDate;
+
+            document.getElementById('edit-end-date').value =  endDate|| '';
+
+            document.getElementById('edit-available').checked =  (isAvailable === "true" || isAvailable === true);
             openModal('edit-modal');
         }
+        function deleteSlot(id) {
+            document.getElementById('delete-id').value = id;
+            openModal('delete-modal');
+        }
+
+
         function addTimeSlot(day) {
             document.getElementById('add-day').value = day;
             openModal('add-modal');
@@ -148,62 +161,6 @@
             </div>
         </div>
 
-        <!-- Weekly Schedule -->
-        <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 mb-8">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Weekly Schedule</h2>
-                <button onclick="openModal('bulk-modal')" class="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 text-sm">
-                    Bulk Update
-                </button>
-            </div>
-
-            <div class="grid grid-cols-1 gap-4">
-<%--                <c:set var="days" value="Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday" />--%>
-<%--                <c:forEach var="day" items="${fn:split(days, ',')}">--%>
-<%--                    <div class="p-4 border border-gray-200 dark:border-gray-600 rounded-2xl hover:shadow-md transition">--%>
-<%--                        <div class="flex items-center justify-between">--%>
-<%--                            <div class="flex items-center">--%>
-<%--                                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-xl flex items-center justify-center mr-4">--%>
-<%--                                    <span class="text-blue-600 dark:text-blue-400 font-bold text-sm">${fn:substring(day,0,3)}</span>--%>
-<%--                                </div>--%>
-<%--                                <div>--%>
-<%--                                    <h3 class="font-semibold text-gray-900 dark:text-white">${day}</h3>--%>
-<%--                                    <div class="flex items-center space-x-4 mt-1">--%>
-<%--                                        <!-- Sample availability data - replace with real data -->--%>
-<%--                                        <c:choose>--%>
-<%--                                            <c:when test="${day == 'Saturday' || day == 'Sunday'}">--%>
-<%--                                                <span class="text-sm text-red-600 dark:text-red-400">Not Available</span>--%>
-<%--                                            </c:when>--%>
-<%--                                            <c:otherwise>--%>
-<%--                                                <span class="text-sm text-green-600 dark:text-green-400">08:00 AM - 06:00 PM</span>--%>
-<%--                                                <span class="px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded text-xs">Available</span>--%>
-<%--                                            </c:otherwise>--%>
-<%--                                        </c:choose>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="flex items-center space-x-2">--%>
-<%--                                <c:choose>--%>
-<%--                                    <c:when test="${day == 'Saturday' || day == 'Sunday'}">--%>
-<%--                                        <button onclick="addTimeSlot('${day}')" class="px-3 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-xl text-sm hover:bg-blue-100 transition">--%>
-<%--                                            Add Hours--%>
-<%--                                        </button>--%>
-<%--                                    </c:when>--%>
-<%--                                    <c:otherwise>--%>
-<%--                                        <button onclick="editAvailability(1, '${day}', '08:00', '18:00', true)" class="px-3 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-xl text-sm hover:bg-blue-100 transition">--%>
-<%--                                            Edit--%>
-<%--                                        </button>--%>
-<%--                                        <button onclick="toggleDayAvailability('${day}', true)" class="px-3 py-2 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-xl text-sm hover:bg-red-100 transition">--%>
-<%--                                            Disable--%>
-<%--                                        </button>--%>
-<%--                                    </c:otherwise>--%>
-<%--                                </c:choose>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </c:forEach>--%>
-            </div>
-        </div>
 
         <!-- Time Slots -->
         <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
@@ -221,11 +178,17 @@
                     <div class="p-4 bg-green-50 dark:bg-green-900/20 rounded-2xl">
                         <div class="flex items-center justify-between mb-2">
                             <h4 class="font-semibold text-gray-900 dark:text-white">${availability.dayOfWeek}</h4>
-                            <span class="px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded text-xs">Active</span>
+                            <c:choose>
+                                <c:when test="${availability.available}">
+                                    <span class="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full text-xs">Active</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="px-3 py-1 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 rounded-full text-xs">Inactive</span>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                                ${availability.startDateFormatted} -
-                                    <c:if test="${availability.endDateFormatted  != null}">
+                                ${availability.startDateFormatted} -<c:if test="${availability.endDateFormatted  != null}">
                                     ${availability.endDateFormatted }
                                 </c:if>
                                     <c:if test="${availability.endDateFormatted == null}">
@@ -236,8 +199,19 @@
                                 ${availability.startTimeFormatted} - ${availability.endTimeFormatted}
                         </p>
                         <div class="flex space-x-2 mt-3">
-                            <button class="px-3 py-1 bg-white dark:bg-gray-700 text-green-600 dark:text-green-400 rounded-lg text-xs hover:bg-gray-50 dark:hover:bg-gray-600 transition">Edit</button>
-                            <button class="px-3 py-1 bg-white dark:bg-gray-700 text-red-600 dark:text-red-400 rounded-lg text-xs hover:bg-gray-50 dark:hover:bg-gray-600 transition">Delete</button>
+                            <button   onclick="editSlot(
+                                ${availability.id},
+                                    '${availability.dayOfWeek}',
+                                    '${availability.slotDuration}',
+                                    '${fn:escapeXml(availability.startTime)}',
+                                    '${fn:escapeXml(availability.endTime)}',
+                                    '${fn:escapeXml(availability.startDate)}',
+                                    '${fn:escapeXml(availability.endDate)}',
+                                    '${fn:escapeXml(availability.available)}'
+                                    )"
+                                      class="px-3 py-1 bg-white dark:bg-gray-700 text-green-600 dark:text-green-400 rounded-lg text-xs hover:bg-gray-50 dark:hover:bg-gray-600 transition">Edit</button>
+                            <button  onclick="deleteSlot(${availability.id})"
+                                    class="px-3 py-1 bg-white dark:bg-gray-700 text-red-600 dark:text-red-400 rounded-lg text-xs hover:bg-gray-50 dark:hover:bg-gray-600 transition">Delete</button>
                         </div>
                     </div>
                 </c:forEach>
@@ -258,40 +232,7 @@
     </main>
 </div>
 
-<!-- Add Modal -->
-<div id="add-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
-    <div class="flex items-center justify-center min-h-screen p-4">
-        <div class="bg-white dark:bg-gray-800 rounded-3xl max-w-md w-full p-6">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Add Availability</h2>
-                <button onclick="closeModal('add-modal')" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">✕</button>
-            </div>
-            <form action="${pageContext.request.contextPath}/doctor/availability" method="post" class="space-y-4">
-                <input type="hidden" name="action" value="add">
-                <input type="hidden" id="add-day" name="day">
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Start Time</label>
-                    <input type="time" name="startTime" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">End Time</label>
-                    <input type="time" name="endTime"  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
-                </div>
-
-
-                <div class="flex items-center">
-                    <input type="checkbox" name="available" id="add-available" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                    <label for="add-available" class="ml-2 text-sm text-gray-700 dark:text-gray-300">Available</label>
-                </div>
-                <div class="flex space-x-4">
-                    <button type="button" onclick="closeModal('add-modal')" class="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl">Cancel</button>
-                    <button type="submit" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700">Add</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 <!-- Edit Modal -->
 <div id="edit-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
@@ -304,31 +245,49 @@
             <form action="${pageContext.request.contextPath}/doctor/availability" method="post" class="space-y-4">
                 <input type="hidden" name="action" value="update">
                 <input type="hidden" id="edit-id" name="id">
+
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Day</label>
-                    <input type="text" id="edit-day" name="day" readonly class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-gray-50 dark:bg-gray-600 dark:text-white">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Slot Name</label>
+                    <input type="number" id="edit-duration" name="duration"  required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" placeholder="ex,30">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Start Time</label>
-                    <input type="time" id="edit-start-time" name="startTime" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">End Time</label>
-                    <input type="time" id="edit-end-time" name="endTime" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Days</label>
+                    <select  name="day-of-week"  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                        <option selected  id="edit-day"></option>
+                        <option value="MONDAY">Monday</option>
+                        <option value="TUESDAY">Tuesday</option>
+                        <option value="WEDNESDAY">Wednesday</option>
+                        <option value="THURSDAY">Thursday</option>
+                        <option value="FRIDAY">Friday</option>
+                        <option value="SATURDAY">Saturday</option>
+                        <option value="SUNDAY">Sunday</option>
+                    </select>
                 </div>
 
                 <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Start Time</label>
+                    <input type="time" id="edit-start-time" name="start-time" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">End Time</label>
+                    <input type="time" id="edit-end-time" name="end-time" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                </div>
+
+
+
+                <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Start Date</label>
-                    <input type="date" id="edit-end-time" name="startDate"  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    <input type="date" id="edit-start-date" name="start-date"  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">End Date</label>
-                    <input type="date" id="edit-end-time" name="endDat"  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    <input type="date" id="edit-end-date" name="end-dat"  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
                 </div>
+
                 <div class="flex items-center">
-                    <input type="checkbox" name="available" id="edit-available" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                     <label for="edit-available" class="ml-2 text-sm text-gray-700 dark:text-gray-300">Available</label>
+                    <input type="checkbox" name="is-available" id="edit-available"  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                 </div>
                 <div class="flex space-x-4">
                     <button type="button" onclick="closeModal('edit-modal')" class="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl">Cancel</button>
@@ -395,65 +354,32 @@
     </div>
 </div>
 
-<!-- Bulk Update Modal -->
-<div id="bulk-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+<div id="delete-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
     <div class="flex items-center justify-center min-h-screen p-4">
-        <div class="bg-white dark:bg-gray-800 rounded-3xl max-w-lg w-full p-6">
+        <div class="bg-white dark:bg-gray-800 rounded-3xl max-w-md w-full p-6">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Bulk Update Schedule</h2>
-                <button onclick="closeModal('bulk-modal')" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">✕</button>
+                <h2 class="text-xl font-bold text-red-600">Delete Availabbility</h2>
+                <button onclick="closeModal('delete-modal')" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
             </div>
-            <form action="${pageContext.request.contextPath}/doctor/availability/bulk" method="post" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Apply to Days</label>
-                    <div class="grid grid-cols-2 gap-2">
-                        <label class="flex items-center">
-                            <input type="checkbox" name="days" value="Monday" class="mr-2">
-                            <span class="text-sm">Monday</span>
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" name="days" value="Tuesday" class="mr-2">
-                            <span class="text-sm">Tuesday</span>
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" name="days" value="Wednesday" class="mr-2">
-                            <span class="text-sm">Wednesday</span>
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" name="days" value="Thursday" class="mr-2">
-                            <span class="text-sm">Thursday</span>
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" name="days" value="Friday" class="mr-2">
-                            <span class="text-sm">Friday</span>
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" name="days" value="Saturday" class="mr-2">
-                            <span class="text-sm">Saturday</span>
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" name="days" value="Sunday" class="mr-2">
-                            <span class="text-sm">Sunday</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Start Time</label>
-                        <input type="time" name="startTime" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">End Time</label>
-                        <input type="time" name="endTime" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
-                    </div>
-                </div>
-                <div class="flex space-x-4">
-                    <button type="button" onclick="closeModal('bulk-modal')" class="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl">Cancel</button>
-                    <button type="submit" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700">Update All</button>
-                </div>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">
+                Are you sure you want to delete Dr. <span id="delete-name" class="font-semibold"></span>? This action cannot be undone.
+            </p>
+            <form action="${pageContext.request.contextPath}/doctor/availability" method="post" class="flex space-x-4">
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" id="delete-id" name="id">
+                <button type="button" onclick="closeModal('delete-modal')"
+                        class="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl">Cancel</button>
+                <button type="submit"
+                        class="flex-1 px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700">Delete</button>
             </form>
         </div>
     </div>
 </div>
+
+
 </body>
 </html>

@@ -43,13 +43,9 @@ public class AvailabilityServlet  extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         LoginDTO user = (session != null) ? (LoginDTO)  session.getAttribute("user") : null;
-        System.out.println("Doctor ID in session: " + user.getId());
 
         List<AvailabilityDTO> availabilities = availabilityService.getAllAvailabilityByDoctor(user.getId());
-        System.out.println("✅ Found " + availabilities.size() + " availabilities:");
-        for (AvailabilityDTO availabilityDTO : availabilities) {
-            System.out.println("🕒 " + availabilityDTO);
-        }
+
         request.setAttribute("availabilities", availabilities);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/doctor/availability.jsp");
         requestDispatcher.forward(request,response);
@@ -62,6 +58,10 @@ public class AvailabilityServlet  extends HttpServlet {
             String action = request.getParameter("action");
             if(action.equals("add")){
                 addAvailability(request,response);
+            }else if (action.equals("update")){
+                updateAvailability(request,response);
+            }else  if (action.equals("delete")){
+                deleteAvailability(request,response);
             }
     }
 
@@ -111,5 +111,50 @@ public class AvailabilityServlet  extends HttpServlet {
         }
 
 
+    }
+
+    public void updateAvailability(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String slotParam = request.getParameter("duration");
+        int slotDuration = (slotParam != null && !slotParam.isEmpty())
+                ? Integer.parseInt(slotParam)
+                : 30;
+        DayOfWeekEnum dayOfWeek = DayOfWeekEnum.valueOf(request.getParameter("day-of-week"));
+        LocalTime startTime = LocalTime.parse(request.getParameter("start-time"));
+        LocalTime endTime = LocalTime.parse(request.getParameter("end-time"));
+        LocalDate startDate = LocalDate.parse(request.getParameter("start-date") );
+        String endDateParam = request.getParameter("end-date");
+        boolean isAvailable = Boolean.parseBoolean(request.getParameter("is-available")) ;
+        LocalDate endDate = (endDateParam != null && !endDateParam.isEmpty())
+                ? LocalDate.parse(endDateParam)
+                : null;
+
+
+        HttpSession session = request.getSession(false);
+        LoginDTO user = (session != null) ? (LoginDTO)  session.getAttribute("user") : null;
+
+        AvailabilityDTO availabilityDTO = new AvailabilityDTO(id, dayOfWeek, startTime, endTime,startDate,endDate ,slotDuration, isAvailable);
+
+        try {
+            availabilityService.updateAvailability(availabilityDTO);
+            request.setAttribute("success","availability updated successful" );
+            doGet(request, response);
+        }catch (Exception e){
+            request.setAttribute("error",e.getMessage() );
+            request.setAttribute("error", "Error updaing availability: " + e.getMessage());
+            doGet(request, response);
+        }
+    }
+
+    public void deleteAvailability(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        long id =  Integer.parseInt(request.getParameter("id"));
+        try{
+            availabilityService.deleteAvailability(id);
+            request.setAttribute("success","availability deleted successful");
+            doGet(request, response);
+        }catch (Exception e){
+            request.setAttribute("error", "Error deleting availability: " + e.getMessage());
+            doGet(request, response);
+        }
     }
 }
