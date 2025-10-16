@@ -84,4 +84,20 @@ public class DoctorRepository implements DoctorInterface {
             em.close();
         }
     }
+
+    public Doctor findByUserId(long userId) {
+        EntityManager em = JPAsingleton.getEntityManager();
+        try{
+            return em.createQuery(
+                            "SELECT d FROM Doctor d WHERE d.user.id = :userId",
+                            Doctor.class
+                    )
+                    .setParameter("userId", userId)
+                    .getSingleResult();
+        }finally {
+            em.close();
+        }
+
+
+    }
 }

@@ -36,6 +36,7 @@ public class UserRepository implements UserInterface {
       }catch(NoResultException e){
          return null;
       }
-
    }
+
+
 }
