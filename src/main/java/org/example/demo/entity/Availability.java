@@ -18,6 +18,7 @@ public class Availability {
     private DayOfWeekEnum dayOfWeek;
 
     @Column(name = "start_time", nullable = false)
+
     private java.time.LocalTime startTime;
 
     @Column(name = "end_time", nullable = false)
@@ -32,10 +33,11 @@ public class Availability {
     @Column(name = "start_date", nullable = false)
     private java.time.LocalDate startDate;
 
-    @Column(name = "end_date")
+    @Column(name = "end_date" , nullable = true)
     private java.time.LocalDate endDate;
 
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "doctor_id", nullable = false)
     private Doctor doctor;
 

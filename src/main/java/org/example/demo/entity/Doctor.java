@@ -90,4 +90,6 @@ public class Doctor {
                 ", appointments=" + appointments +
                 '}';
     }
+
+
 }
