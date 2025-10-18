@@ -46,6 +46,9 @@ public class AvailabilityServlet  extends HttpServlet {
 
         List<AvailabilityDTO> availabilities = availabilityService.getAllAvailabilityByDoctor(user.getId());
 
+        for(AvailabilityDTO availability : availabilities){
+            System.out.println( "---->"+availability);
+        }
         request.setAttribute("availabilities", availabilities);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/doctor/availability.jsp");
         requestDispatcher.forward(request,response);

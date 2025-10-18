@@ -97,7 +97,28 @@ public class DoctorRepository implements DoctorInterface {
         }finally {
             em.close();
         }
-
-
     }
+//    public List<Doctor> searchDoctor (String doctorName, String specialtyName) {
+//      EntityManager em = JPAsingleton.getEntityManager();
+//      try {
+//          String sql = "SELECT d.id, u.full_name, d.matricule, dp.name AS departmentName, s.name AS specialtyName " +
+//                  "FROM doctors d " +
+//                  "INNER JOIN users u ON u.id = d.user_id " +
+//                  "INNER JOIN specialites s ON s.id = d.specialite_id " +
+//                  "INNER JOIN departments dp ON s.department_id = dp.id " +
+//                  "WHERE (:specialtyName = 'all' OR s.name = :specialtyName) " +
+//                  "AND u.full_name LIKE CONCAT('%', :fullName, '%')";
+//
+//          List<Doctor> results = em.createNativeQuery(sql, Doctor.class)
+//                  .setParameter("specialtyName", specialtyName)
+//                  .setParameter("fullName", doctorName)
+//                  .getResultList();
+//          return results;
+//      }catch(Exception e){
+//          e.printStackTrace();
+//          return null;
+//      }finally{
+//          em.close();
+//      }
+//    }
 }

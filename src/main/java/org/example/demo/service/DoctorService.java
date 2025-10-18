@@ -10,6 +10,7 @@ import org.example.demo.repository.DoctorRepository;
 import org.example.demo.repository.SpecialtieRepository;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DoctorService {
@@ -56,4 +57,12 @@ public class DoctorService {
     public void deleteDoctor(long id){
         doctorRepository.delete(id);
     }
+
+//    public List<DoctorDTO> searchDoctor(String doctorName, String specialtyName) {
+//        List<Doctor> doctors = doctorRepository.searchDoctor(doctorName, specialtyName);
+//        List<DoctorDTO> doctorDTOs = new ArrayList<>();
+//        for (Doctor doctor : doctors) {
+//            doctorDTOs.add(DoctorMapper.ToDTO(doctor));
+//        }
+//    }
 }

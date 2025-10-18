@@ -52,10 +52,10 @@ public class LoginServlet  extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/doctor");
                 break;
             case "PATIENT":
-                response.sendRedirect(request.getContextPath() + "/WEB-INF/views/patient/dashboard");
+                response.sendRedirect(request.getContextPath() + "/patient");
                 break;
             case "STAFF":
-                response.sendRedirect(request.getContextPath() + "/WEB-INF/views/staff/dashboard");
+                response.sendRedirect(request.getContextPath() + "/staff");
             default:
                 response.sendRedirect(request.getContextPath() + "WEB-INF/views");
         }
