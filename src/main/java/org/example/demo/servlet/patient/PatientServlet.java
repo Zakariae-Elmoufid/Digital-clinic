@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.demo.dto.DoctorDTO;
 import org.example.demo.dto.SpecialtieDTO;
-import org.example.demo.entity.Doctor;
 import org.example.demo.repository.DepartmentRepository;
 import org.example.demo.repository.DoctorRepository;
 import org.example.demo.repository.SpecialtieRepository;
@@ -25,7 +24,7 @@ public class PatientServlet  extends HttpServlet {
     @Override
     public void init() throws ServletException {
         specialtieService = new SpecialtieService(new SpecialtieRepository(), new DepartmentRepository());
-        doctorService = new DoctorService(new DoctorRepository(), new SpecialtieRepository());
+        doctorService = new DoctorService(new DoctorRepository());
     }
 
 

@@ -112,4 +112,6 @@ public class Availability {
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
     }
-}
+
+    }
+
