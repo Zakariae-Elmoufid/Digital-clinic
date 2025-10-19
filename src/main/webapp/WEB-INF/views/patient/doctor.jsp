@@ -101,6 +101,17 @@
     </div>
   </div>
 </nav>
+<%
+  String successMessage = (String) session.getAttribute("success");
+  if (successMessage != null) {
+%>
+<div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px;">
+  <%= successMessage %>
+</div>
+<%
+    session.removeAttribute("success"); // pour ne pas le réafficher après refresh
+  }
+%>
 
 <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8">
   <!-- Doctor Profile Header -->

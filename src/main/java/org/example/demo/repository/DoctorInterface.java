@@ -6,4 +6,6 @@ import java.io.Serializable;
 
 public interface DoctorInterface {
     public void save(Doctor doctor);
+
+    public Doctor findDoctor(long doctorId);
 }
