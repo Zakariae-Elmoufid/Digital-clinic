@@ -61,8 +61,8 @@
           Z
         </div>
         <div class="ml-3 flex-1">
-          <p class="text-sm font-semibold">Zakariae Elmoufid</p>
-          <p class="text-xs text-gray-400">Patient ID: #PT12345</p>
+          <p class="text-sm font-semibold">${sessionScope.user.fullName}</p>
+          <p class="text-xs text-gray-400">Patient ID: #${sessionScope.user.id}</p>
         </div>
         <a href="${pageContext.request.contextPath}/logout" class="text-gray-400 hover:text-white p-2" title="Logout">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -81,23 +81,12 @@
 <nav class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-40">
   <div class="max-w-7xl mx-auto px-4 lg:px-8 py-4 flex items-center justify-between">
     <div class="flex items-center">
-      <a href="${pageContext.request.contextPath}/patient/dashboard" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+      <a href="${pageContext.request.contextPath}/patient" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
         <span class="text-sm">Back to Doctors</span>
       </a>
-    </div>
-    <div class="flex items-center space-x-4">
-      <button onclick="toggleDarkMode()" class="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700">
-        <svg class="w-5 h-5 text-gray-600 dark:text-gray-400 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646"/>
-        </svg>
-        <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3"/>
-        </svg>
-      </button>
-      <span class="text-sm text-gray-600 dark:text-gray-400 hidden sm:block">2025-10-18 20:36:07</span>
     </div>
   </div>
 </nav>
@@ -114,6 +103,7 @@
 %>
 
 <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8">
+
   <!-- Doctor Profile Header -->
   <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 p-8 mb-8">
     <div class="flex flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:space-x-8">

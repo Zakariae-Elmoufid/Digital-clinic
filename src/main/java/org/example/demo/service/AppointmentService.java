@@ -68,4 +68,9 @@ public class AppointmentService {
 
         System.out.println("⚠️ No available slots on " + date);
     }
+
+    public List<Appointment> fetchAppointmentByPatientId(long userId) {
+        Patient patient = patientInterface.findPatientByUserId(userId);
+        return appointmentInterface.findByPatient(patient);
+    }
 }
