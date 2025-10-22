@@ -13,13 +13,13 @@ public class DoctorDTO {
     @NotBlank(message = "L'adresse e-mail est obligatoire")
     @Email(message = "L'adresse e-mail doit être valide")
     private String email;
-    @Size(min = 6 , message = "password must be 6 char min")
+    @Size(min = 6, message = "password must be 6 char min")
     private String password;
     private Long sepcialtieId;
     private String specialite;
-    private  String department;
+    private String department;
     private boolean active;
-    private String  createdAt;
+    private String createdAt;
 
 
     private RoleEnum role;
@@ -35,7 +35,9 @@ public class DoctorDTO {
         this.matriculate = matriculate;
     }
 
-    public DoctorDTO(Long id, String name, String email,  Long sepcialtieId, String matriculate , boolean active) {
+
+
+    public DoctorDTO(Long id, String name, String email, Long sepcialtieId, String matriculate, boolean active) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -47,6 +49,8 @@ public class DoctorDTO {
     public String getDepartment() {
         return department;
     }
+
+
 
     public void setDepartment(String department) {
         this.department = department;
@@ -68,7 +72,7 @@ public class DoctorDTO {
         this.active = active;
     }
 
-    public DoctorDTO(Long id, String email, String name, RoleEnum role, String matriculate , String specialite , String department , boolean active, String createdAt ,long sepcialtieId) {
+    public DoctorDTO(Long id, String email, String name, RoleEnum role, String matriculate, String specialite, String department, boolean active, String createdAt, long sepcialtieId) {
         this.id = id;
         this.email = email;
         this.name = name;
@@ -159,3 +163,4 @@ public class DoctorDTO {
                 '}';
     }
 }
+

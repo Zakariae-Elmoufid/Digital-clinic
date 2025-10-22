@@ -4,10 +4,17 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
 import org.example.demo.dto.DoctorDTO;
+import org.example.demo.entity.Appointment;
+import org.example.demo.entity.Availability;
+import org.example.demo.entity.AvailabilitySlot;
 import org.example.demo.entity.Doctor;
 import org.example.demo.mapper.DoctorMapper;
 import org.example.demo.util.JPAsingleton;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
@@ -97,7 +104,21 @@ public class DoctorRepository implements DoctorInterface {
         }finally {
             em.close();
         }
-
-
     }
+
+    public Doctor findDoctor(long doctorId) {
+        EntityManager em = JPAsingleton.getEntityManager();
+        try {
+            Doctor doctor = em.find(Doctor.class, doctorId);
+            doctor.getAvailabilities().size();
+            doctor.getAppointments().size();
+            return doctor;
+        } finally {
+            em.close();
+        }
+    }
+
+
+
+
 }

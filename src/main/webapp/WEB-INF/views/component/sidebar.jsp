@@ -102,7 +102,7 @@
                     A
                 </div>
                 <div class="flex-1">
-                    <p class="text-sm font-semibold">Admin User</p>
+                    <p class="text-sm font-semibold">${sessionScope.user.fullName}</p>
                     <p class="text-xs text-gray-400">Administrator</p>
                 </div>
                 <a href="${pageContext.request.contextPath}/logout" class="text-gray-400 hover:text-white transition duration-200" title="Logout">

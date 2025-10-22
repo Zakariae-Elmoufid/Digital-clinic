@@ -10,7 +10,6 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import org.example.demo.dto.DoctorDTO;
 import org.example.demo.dto.SpecialtieDTO;
-import org.example.demo.entity.Doctor;
 import org.example.demo.repository.DoctorRepository;
 import org.example.demo.repository.SpecialtieRepository;
 import org.example.demo.service.DoctorService;
@@ -31,7 +30,7 @@ public class DoctorServlet extends HttpServlet {
         DoctorRepository  doctorRepository = new DoctorRepository();
         SpecialtieRepository specialtieRepository = new SpecialtieRepository();
 
-        this.doctorService = new DoctorService(doctorRepository,specialtieRepository );
+        this.doctorService = new DoctorService(doctorRepository);
         this.specialtieService = new SpecialtieService(specialtieRepository);
     }
 

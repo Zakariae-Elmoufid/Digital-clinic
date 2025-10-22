@@ -79,17 +79,7 @@ public class Doctor {
         this.appointments = appointments;
     }
 
-    @Override
-    public String toString() {
-        return "Doctor{" +
-                "id=" + id +
-                ", matricule='" + matricule + '\'' +
-                ", user=" + user +
-                ", specialite=" + specialite +
-                ", availabilities=" + availabilities +
-                ", appointments=" + appointments +
-                '}';
-    }
+
 
 
 }

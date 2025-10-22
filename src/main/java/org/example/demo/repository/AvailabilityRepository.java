@@ -40,9 +40,8 @@ public class AvailabilityRepository implements AvailabilityInterface {
         try{
             return em.createNativeQuery(
                     "SELECT * FROM availabilities " +
-                            "WHERE start_date <= CURRENT_DATE " +
+                            "WHERE  doctor_id = :doctorId " +
                             "AND (end_date IS NULL OR end_date >= CURRENT_DATE) " +
-                            "AND doctor_id = :doctorId " +
                             "ORDER BY CASE day_of_week " +
                             "WHEN 'MONDAY' THEN 1 " +
                             "WHEN 'TUESDAY' THEN 2 " +

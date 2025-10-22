@@ -12,7 +12,7 @@ import org.example.demo.entity.User;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/admin/*", "/doctor/*"})
+@WebFilter(urlPatterns = {"/admin/*", "/doctor/*" ,"/patient/*"})
 public class AuthFilter  implements Filter {
 
 
