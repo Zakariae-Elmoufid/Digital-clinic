@@ -2,8 +2,37 @@
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_2.xsd"
-             version="3.2">
-  <persistence-unit name="default">
+             version="3.1">
+  <persistence-unit name="clinicPu">
+    <class>org.example.demo.entity.User</class>
+    <class>org.example.demo.entity.Department</class>
+    <class>org.example.demo.entity.Specialite</class>
+    <class>org.example.demo.entity.Doctor</class>
+    <class>org.example.demo.entity.Patient</class>
+    <class>org.example.demo.entity.Staff</class>
+    <class>org.example.demo.entity.Availability</class>
+    <class>org.example.demo.entity.Appointment</class>
+    <class>org.example.demo.entity.MedicalNote</class>
+
+    <properties>
+      <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Digital-Clinic"/>
+      <property name="jakarta.persistence.jdbc.user" value="postgres"/>
+      <property name="jakarta.persistence.jdbc.password" value="123123"/>
+
+      <!-- Hibernate as JPA provider -->
+      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+
+      <!-- Auto create/update tables -->
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+
+      <!-- Show SQL in console -->
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+
+  
+      <property name="hibernate.use_sql_comments" value="true"/>
+    </properties>
 
   </persistence-unit>
 </persistence>

@@ -12,6 +12,9 @@ target/
 *.iml
 *.ipr
 
+/src/main/resources/db.properties
+
+
 ### Eclipse ###
 .apt_generated
 .classpath
